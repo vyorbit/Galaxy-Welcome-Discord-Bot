@@ -11,6 +11,9 @@ export default new Event({
         console.log(chalk.green(`[Ready] Logged in as ${client.user?.tag} (${client.user?.id})`));
         console.log(chalk.green(`[Ready] Serving ${client.guilds.cache.size} guild(s) on this shard`));
 
+        // Initialize giveaway timers from database on startup
+        extClient.giveawayManager.initialize();
+
         // Only register slash commands from cluster 0 / shard 0
         // to avoid duplicate registrations across shards
         const isLeadShard = extClient.cluster?.id === 0;
