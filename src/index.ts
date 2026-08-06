@@ -1,3 +1,10 @@
+/**
+ * @file index.ts
+ * @organization VY ORBIT (https://vyorbit.com)
+ * @copyright (c) VY ORBIT. All rights reserved.
+ * @internal VYORBIT-CORE-SHARD-MGR
+ */
+
 import { ClusterManager } from 'discord-hybrid-sharding';
 import { config } from 'dotenv';
 import chalk from 'chalk';
@@ -24,4 +31,13 @@ manager.on('clusterCreate', (cluster) => {
 
 manager.spawn({ timeout: -1 }).catch((err) => {
     console.error(chalk.red('[Sharding ERROR] Failed to spawn clusters:'), err);
+});
+
+// Master Cluster Anti-Crash Protection
+process.on('unhandledRejection', (reason, promise) => {
+    console.error(chalk.red('[Master Anti-Crash] Unhandled Rejection:'), reason);
+});
+
+process.on('uncaughtException', (error) => {
+    console.error(chalk.red('[Master Anti-Crash] Uncaught Exception:'), error);
 });

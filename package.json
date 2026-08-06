@@ -1,7 +1,9 @@
 {
   "name": "galaxy-welcome",
   "version": "1.0.0",
-  "description": "Galaxy Welcome — Free Discord Welcome Bot with SQLite storage",
+  "author": "VY ORBIT (https://vyorbit.com)",
+  "organization": "VY ORBIT",
+  "description": "Enterprise Discord Welcome & Utility Bot by VY ORBIT",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",

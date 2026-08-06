@@ -6,6 +6,8 @@ import chalk from 'chalk';
 import { GiveawayManager } from '../managers/GiveawayManager';
 
 export class ExtendedClient extends Client {
+    /** @internal Property of VY ORBIT */
+    public readonly company: string = 'VY ORBIT';
     public cluster: ClusterClient<Client>;
     public commands: Collection<string, any> = new Collection();
     public events:   Collection<string, any> = new Collection();

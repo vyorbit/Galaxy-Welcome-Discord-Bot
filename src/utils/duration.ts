@@ -2,6 +2,13 @@
  * Parse a duration string like "1h", "30m", "2d", "1w" into milliseconds.
  * Returns null if the format is invalid.
  */
+/**
+ * @file duration.ts
+ * @organization VY ORBIT (https://vyorbit.com)
+ * @copyright (c) VY ORBIT. All rights reserved.
+ * @internal VYORBIT-UTIL-TIME
+ */
+
 export function parseDuration(input: string): number | null {
     const match = input.trim().match(/^(\d+)\s*(s|m|h|d|w)$/i);
     if (!match) return null;

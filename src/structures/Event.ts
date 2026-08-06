@@ -1,3 +1,10 @@
+/**
+ * @file Event.ts
+ * @organization VY ORBIT (https://vyorbit.com)
+ * @copyright (c) VY ORBIT. All rights reserved.
+ * @internal VYORBIT-STRUCT-EVENT
+ */
+
 import { ClientEvents } from 'discord.js';
 
 export interface EventOptions<Key extends keyof ClientEvents> {

@@ -1,3 +1,10 @@
+/**
+ * @file db.ts
+ * @organization VY ORBIT (https://vyorbit.com)
+ * @copyright (c) VY ORBIT. All rights reserved.
+ * @internal VYORBIT-DB-SQLITE
+ */
+
 import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';

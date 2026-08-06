@@ -1,3 +1,10 @@
+/**
+ * @file Command.ts
+ * @organization VY ORBIT (https://vyorbit.com)
+ * @copyright (c) VY ORBIT. All rights reserved.
+ * @internal VYORBIT-STRUCT-COMMAND
+ */
+
 import {
     ChatInputCommandInteraction,
     SlashCommandBuilder,
