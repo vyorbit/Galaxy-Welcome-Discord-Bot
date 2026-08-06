@@ -25,12 +25,12 @@
 *Powered by VY ORBIT*
 
 [![Discord.js](https://img.shields.io/badge/discord.js-v14-blue.svg?logo=discord&logoColor=white)](https://discord.js.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248.svg?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![Node.js](https://img.shields.io/badge/Node.js-v18+-339933.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![SQLite](https://img.shields.io/badge/SQLite-better--sqlite3-003B57.svg?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-v20+-339933.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**WelcomePro** is a production-grade, highly scalable public Discord bot designed to serve 10,000+ Discord servers simultaneously. Built with TypeScript, Discord.js v14, MongoDB Atlas, and a cluster/sharding architecture for maximum performance and zero downtime.
+**Galaxy Welcome** is a production-grade, highly scalable Discord bot designed to serve Discord servers with high performance and zero external database costs. Built with TypeScript, Discord.js v14, high-performance local SQLite (`better-sqlite3`), and a hybrid cluster/sharding architecture.
 
 ---
 
@@ -38,46 +38,50 @@
 
 ## 🌟 Key Features
 
-- 🏠 **Discord-Based Dashboard (`/dashboard`)**: 100% configurable directly within Discord using interactive embeds, buttons, select menus, and modals — **No external website needed**.
-- 👋 **Welcome System**: Custom messages, embed generator, variables support (`{user}`, `{server}`, `{membercount}`, etc.), and dynamic high-quality PNG welcome card generator.
-- 🚪 **Leave System**: Configurable leave notifications and leave card rendering.
-- 🎭 **Auto Roles**: Single, multiple, join roles, and delayed role assignment.
-- 📢 **Announcement System**: Channel target, custom embeds, images, footers, buttons, and role mentions.
-- 📊 **Poll System**: Single/Multiple choice, anonymous voting, timed auto-end, and real-time results.
-- 🎉 **Giveaway System**: Multiple winners, bonus entries, role requirements, account age checks, and automatic rerolling.
-- 📝 **Logging System**: Full audit logging for Member, Message, and Bot Admin actions.
-- 👑 **Owner Control Panel**: Remote server configuration, global broadcast system, live performance stats, emergency controls, and user/server blacklisting.
-- 💾 **Backup & Restore System**: Save and restore all server settings (`/backup create`, `/backup restore`).
+- 👋 **Welcome System**: Custom setup (`/welcome setup`), custom message placeholders (`{mention}`, `{user}`, `{server}`, `{count}`), custom embed colors, embed/plain text toggles, preview testing (`/welcome test`), and full config views.
+- 🚪 **Leave System**: Custom setup (`/leave setup`), placeholder support, embed colors, toggleable modes, and preview testing (`/leave test`).
+- 🛠 **Utilities**: `/ping` (live bot & WebSocket API latency metrics) and `/serverinfo` (server stats + live welcome/leave configurations).
+- 👑 **Owner Controls**: `/owner-servers` cross-cluster global server tracking using `broadcastEval`.
+- 🗄 **Zero-Cost SQLite Database**: Local, file-based database powered by `better-sqlite3` with WAL mode enabled.
+- 🔀 **Hybrid Sharding & Clustering**: Powered by `discord-hybrid-sharding` for multi-process scaling.
 
 ---
 
 ## 🛠 Tech Stack & Architecture
 
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
 - **Core Library**: [Discord.js v14](https://discord.js.org/)
-- **Clustering & Sharding**: [`discord-hybrid-sharding`](https://www.npmjs.com/package/discord-hybrid-sharding) for multi-process clustering
-- **Database**: [MongoDB Atlas](https://www.mongodb.com/atlas) with [Mongoose](https://mongoosejs.com/)
-- **Deployment Support**: Docker, PM2, Windows Batch, Linux VPS
+- **Clustering & Sharding**: [`discord-hybrid-sharding`](https://www.npmjs.com/package/discord-hybrid-sharding)
+- **Database**: High-speed, local file-based [SQLite](https://www.sqlite.org/) via [`better-sqlite3`](https://www.npmjs.com/package/better-sqlite3)
+- **CI/CD**: GitHub Actions (`.github/workflows/build.yml`) for automated TypeScript build verification.
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-Galaxy Welcome/
-├── dist/                   # Compiled JavaScript files
+Galaxy Welcome Discord Bot/
+├── .github/workflows/
+│   └── build.yml           # CI workflow for building TypeScript code
+├── dist/                   # Compiled JavaScript output (gitignored)
 ├── src/
-│   ├── commands/           # Modular Slash Commands
+│   ├── commands/           # Slash commands divided by category
+│   │   ├── admin/          # /welcome and /leave configuration commands
 │   │   ├── owner/          # Owner-only administrative commands
-│   │   └── utilities/      # General utility slash commands
-│   ├── database/           # MongoDB connection handlers
-│   ├── events/             # Discord event listeners (ready, interactionCreate, etc.)
-│   ├── models/             # Mongoose schemas (GuildSettings, WelcomeSettings, etc.)
-│   ├── structures/         # Extended Client & Command interfaces
+│   │   └── utilities/      # /ping and /serverinfo utility commands
+│   ├── database/           # SQLite connection, schemas, and repositories
+│   │   ├── repositories/   # Guild, Welcome, Leave, Giveaway & Poll repositories
+│   │   ├── db.ts           # SQLite initialization & connection pool
+│   │   └── tables.ts       # CREATE TABLE SQL schema definitions
+│   ├── events/             # Discord event handlers (ready, interactionCreate, etc.)
+│   ├── managers/           # Background process managers (GiveawayManager, etc.)
+│   ├── structures/         # ExtendedClient, Command, and Event base classes
+│   ├── utils/              # Helper utilities (duration parsers)
 │   ├── bot.ts              # Cluster worker entry point
 │   └── index.ts            # Sharding & Cluster Manager entry point
 ├── .env.example            # Environment variables template
-├── package.json            # Dependencies & scripts
+├── features.md             # Complete feature specification & DB schema guide
+├── package.json            # Dependencies & build scripts
 ├── start.bat               # One-click Windows startup script
 └── tsconfig.json           # TypeScript configuration
 ```
@@ -88,16 +92,15 @@ Galaxy Welcome/
 
 ### Prerequisites
 
-- [Node.js v18+](https://nodejs.org/)
-- A free [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) connection URI
+- [Node.js v20+](https://nodejs.org/)
 - A Discord Application with a Bot Token from the [Discord Developer Portal](https://discord.com/developers/applications)
 
 ### Setup Instructions
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/WelcomePro.git
-   cd WelcomePro
+   git clone https://github.com/your-username/Galaxy-Welcome-Discord-Bot.git
+   cd "Galaxy Welcome Discord Bot"
    ```
 
 2. **Install Dependencies**
@@ -106,16 +109,11 @@ Galaxy Welcome/
    ```
 
 3. **Configure Environment Variables**
-   Create a `.env` file in the root directory by copying `.env.example`:
-   ```bash
-   cp .env.example .env
-   ```
-   Fill in your secret keys:
+   Create a `.env` file in the root directory:
    ```env
    BOT_TOKEN=your_discord_bot_token
    CLIENT_ID=your_discord_client_id
    OWNER_ID=your_discord_user_id
-   MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net/welcomepro
    ```
 
 4. **Build & Run the Bot**
