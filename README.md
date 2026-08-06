@@ -3,6 +3,22 @@
   Internal ID: VYORBIT-DISCORD-WELCOMEPRO-V1
 -->
 
+> This repository contains all the resources used in VY Orbit
+> all rights reserved copyright © 2026-2027.
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://vyorbit.com">
+    <img src="vy-orbit-logo.png" alt="VY ORBIT Logo" width="50%" height="50%">
+  </a>
+  <p align="center">
+    <strong>VY ORBIT</strong>
+    <br />
+    <br />
+  </p>
+</div>
+
 <div align="center">
 
 # 🚀 WelcomePro — Enterprise Discord Welcome & Utility Bot
@@ -155,5 +171,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 <div align="center">
-Developed with ❤️ for large Discord communities.
+Developed with ❤️ for large Discord communities.<br />
+<strong>Copyright © 2026-2027 VY ORBIT. All rights reserved.</strong>
 </div>
